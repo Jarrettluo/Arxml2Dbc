@@ -58,6 +58,20 @@ class mainFrame(wx.Frame):
         # self._CreateToolBar()  # 工具栏
         self._CreateStatusBar()  # 状态栏
 
+
+        # 设置当前选择的功能项
+        self.current_func = 0
+
+        self.choices = {
+            0: 'Arxml转dbc',
+            1: 'Csv转dbc'
+        }
+        self.cb1 = wx.ComboBox(self, -1, value=self.choices[self.current_func], choices=list(self.choices.values()), style=wx.CB_SORT, pos=(110, 10))
+        # 添加事件处理
+        self.Bind(wx.EVT_COMBOBOX, self.on_combobox, self.cb1)
+
+
+
         # b1 = wx.Button(self, -1, u"打开模板", (10, 10))
         # self.Bind(wx.EVT_BUTTON, self.OnButton1, b1)
 
@@ -217,18 +231,34 @@ class mainFrame(wx.Frame):
             print("====")
 
     def __OpenSingleFile(self, event):
-        filesFilter = "Canoe (*.arxml)|*.arxml|" "All files (*.*)|*.*"
-        fileDialog = wx.FileDialog(self, message="选择单个文件", wildcard=filesFilter, style=wx.FD_OPEN)
+        alternative_file = {
+            0: "Canoe (*.arxml)|*.arxml|" "All files (*.*)|*.*",
+            1: "csv (*.csv)|*.csv|" "All files (*.*)|*.*"
+        }
+        files_filter = alternative_file[self.current_func]
+        fileDialog = wx.FileDialog(self, message="选择单个文件", wildcard=files_filter, style=wx.FD_OPEN)
         dialogResult = fileDialog.ShowModal()
         if dialogResult != wx.ID_OK:
             return
         path = fileDialog.GetPath()
         self.__file_path = path
         file = fileDialog.GetFilename()
+        # 第一类文件：arxml
         if os.path.splitext(file)[-1][1:] == "arxml" or os.path.splitext(file)[-1][1:] == "arxml":
             self.__file_label.SetLabel(file)
             self.sb.SetStatusText(u'准备转换' + path, 0)
             self.filename = os.path.splitext(file)[0]
+
+            self.current_func = 0
+            self.cb1.SetValue(self.choices[self.current_func])
+
+        elif os.path.splitext(file)[-1][1:] == "csv":
+            self.__file_label.SetLabel(file)
+            self.sb.SetStatusText(u'准备转换' + path, 0)
+            self.filename = os.path.splitext(file)[0]
+            self.current_func = 1
+            self.cb1.SetValue(self.choices[self.current_func])
+
         else:
             self.__file_label.SetLabel(file)
             self.sb.SetStatusText(u'准备转换' + path, 0)
@@ -247,7 +277,14 @@ class mainFrame(wx.Frame):
         self.sb.SetStatusText("正在转换" + self.__file_path)
         time_format = time.strftime('%Y%m%d_%H%M%S', time.localtime())
         output_path = OUTPUT_PATH + "/" + self.filename + "_" + time_format + ".dbc"
-        convert_result = convert(os.path.normpath(self.__file_path), os.path.normpath(output_path))
+
+        # 转换分支，如果是arxml转换方式为1
+        if self.current_func == 0:
+            convert_result = convert(os.path.normpath(self.__file_path), os.path.normpath(output_path))
+        elif self.current_func == 1:
+            convert_result = {}
+        else:
+            return
         if convert_result["state"]:
             self.sb.SetStatusText("转换完毕" + self.__file_path)
         else:
@@ -293,6 +330,17 @@ class mainFrame(wx.Frame):
             # give each item a random image
             img = random.randint(0, il_max)
             self.list.SetItemImage(index, img, img)
+
+    def on_combobox(self, event):
+        """ 下拉框的选项
+        用来设置当前选择的功能
+        Args：
+            self: None -> 实例
+            event: Combox Event -> 下拉框的事件
+        returns:
+            None
+        """
+        self.current_func = self.cb1.GetCurrentSelection()
 
 
 class mainApp(wx.App):

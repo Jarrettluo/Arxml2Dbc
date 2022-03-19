@@ -76,8 +76,6 @@ def readCsv():
 
     # 清洗数据，必须满足要求的数据
 
-
-
     grouped_nodes = origin_database.groupby(["node_name"]).groups
     nodes = []
     messages = []
