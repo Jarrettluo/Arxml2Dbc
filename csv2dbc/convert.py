@@ -88,18 +88,41 @@ def readCsv():
             for aa, bb in origin_database.loc[j].iterrows():
                 signal = cantools.database.can.signal.Signal(name=bb["name"],
                                                              start=int(bb["start"]),
-                                                             length=int(bb["length"])
+                                                             length=int(bb["length"]),
+                                                             byte_order= "",
+                                                             is_signed=bb["is_signed"],
+                                                             initial= bb["initial"],
+                                                             invalid=bb["invalid"],
+                                                             scale=bb["scale"],
+                                                             offset=bb["offset"],
+                                                             minimum=bb["minimum"],
+                                                             maximum=bb["maximum"],
+                                                             unit=bb["unit"],
+                                                             choices=bb["choices"],
+                                                             signal_dbc_specifics=bb["signal_dbc_specifics"],
+                                                             signal_comment=bb["signal_comment"],
+                                                             is_multiplexer=bb["is_multiplexer"],
+                                                             is_float=bb["is_float"]
                                                              )
                 signals.append(signal)
             message_header = origin_database.loc[j].iloc[0]
             message = cantools.database.can.message.Message(frame_id=int(message_header["frame_id"]),
                                                             name=message_header["msg_name"],
                                                             length=message_header["msg_length"],
+                                                            header_byte_order=message_header["header_byte_order"],
+                                                            unused_bit_pattern=message_header["unused_bit_pattern"],
+                                                            comment=message_header["msg_comment"],
+                                                            cycle_time=message_header["cycle_time"],
+                                                            is_extended_frame=message_header["is_extended_frame"],
+                                                            is_fd=message_header["is_fd"],
+                                                            bus_name=message_header["bus_name"],
+                                                            strict=message_header["strict"],
+                                                            protocol=message_header["protocol"],
                                                             signals=signals,
                                                             )
             messages.append(message)
 
-        node = cantools.database.can.node.Node(name=key_node)
+        node = cantools.database.can.node.Node(name=key_node, comment=message_header["node_comment"])
         nodes.append(node)
 
     db = cantools.database.can.database.Database(messages=messages, nodes=nodes)
