@@ -9,6 +9,8 @@ import os
 
 from arxml2dbc.switchFile import convert
 
+from csv2dbc.convert import convert as csv_convert
+
 APP_TITLE = u'ARXML文件转换DBC工具'
 APP_ICON = './resources/switch_16.png'
 TMP_PATH = "/tmp/template.docx"
@@ -280,11 +282,14 @@ class mainFrame(wx.Frame):
 
         # 转换分支，如果是arxml转换方式为1
         if self.current_func == 0:
+            print("dsfjdslfjdsl")
             convert_result = convert(os.path.normpath(self.__file_path), os.path.normpath(output_path))
         elif self.current_func == 1:
-            convert_result = {}
+            print("================")
+            convert_result = csv_convert(os.path.normpath(self.__file_path), os.path.normpath(output_path))
         else:
             return
+        print(convert_result)
         if convert_result["state"]:
             self.sb.SetStatusText("转换完毕" + self.__file_path)
         else:

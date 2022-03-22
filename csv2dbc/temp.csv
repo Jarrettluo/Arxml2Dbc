@@ -1,5 +1,5 @@
 node_name,node_comment,node_dbc_specifics,node_autosar_specifics,frame_id,msg_name,msg_length,header_byte_order,unused_bit_pattern,msg_comment,cycle_time,is_extended_frame,is_fd,bus_name,strict,protocol,name,start,length,byte_order,is_signed,initial,invalid,scale,offset,minimum,maximum,unit,choices,signal_dbc_specifics,signal_comment,receivers,is_multiplexer,multiplexer_ids,multiplexer_signal,is_float,decimal,spn
-node1,Comments,DbcSpecifics,AutosarNodeSpecifics,77,ABSdata,6,big_endian,0x00,String,,,,,,,AccelerationForce,10,16,little_endian,FALSE,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
+node1,Comments,DbcSpecifics,AutosarNodeSpecifics,77,ABSdata,dd,big_endian,0x00,String,,,,,,,AccelerationForce,10,16,little_endian,FALSE,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
 node1,Comments,DbcSpecifics,AutosarNodeSpecifics,77,ABSdata,6,big_endian,0x00,String,,,,,,,Diagnostics,0,1,little_endian,FALSE,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
-node1,Comments,DbcSpecifics,AutosarNodeSpecifics,787,ABSdata2,6,big_endian,0x00,String,,,,,,,Accelera323243tionForce,32,16,little_endian,FALSE,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
+node1,Comments,DbcSpecifics,AutosarNodeSpecifics,787,ABSdata2,6,big_endian,0x00,String,,,,,,,Accelera323243tionForce,32,16,little_endian,,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
 node3,Comments,DbcSpecifics,AutosarNodeSpecifics,454,ABSdata3,6,big_endian,0x00,String,,,,,,,Diag432432nostics,16,8,little_endian,FALSE,,,1,-10000,-10000,55535,N,FALSE,,,,,,,,,
