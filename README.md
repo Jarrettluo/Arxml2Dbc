@@ -7,9 +7,7 @@
 
 
 ### 演示视频
-
-<video src="https://github.com/Jarrettluo/Arxml2Dbc/blob/master/Arxml2Dbc%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.mp4"
-width="600"/>
+> 请下载 https://github.com/Jarrettluo/Arxml2Dbc/blob/master/Arxml2Dbc%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.mp4
 
 
 ### 依赖组件
